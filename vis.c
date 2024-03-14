@@ -105,6 +105,11 @@ bool vis_event_emit(Vis *vis, enum VisEvents id, ...) {
 		if (vis->event->term_csi)
 			vis->event->term_csi(vis, va_arg(ap, const long *));
 		break;
+	case VIS_EVENT_MOUSE:
+		// TODO implement mouse events
+		if (vis->event->mouse)
+			vis->event->mouse(vis, va_arg(ap, const int *), va_arg(ap, const int *), va_arg(ap, const int *), va_arg(ap, const int *));
+		break;
 	}
 
 	va_end(ap);
@@ -1343,6 +1348,21 @@ static const char *getkey(Vis *vis) {
 			args[1] = nargs;
 			vis_event_emit(vis, VIS_EVENT_TERM_CSI, args);
 		}
+		return getkey(vis);
+	}
+
+	// FIXME a quick hack to test something out...
+	// OK so this detects mice correctly...! Need to figure out how to actually parse.
+	if (key.type == TERMKEY_TYPE_MOUSE) {
+		TermKeyMouseEvent event;
+		int button;
+		int line;
+		int col;
+		if (termkey_interpret_mouse(termkey, &key, &event, &button, &line, &col) == TERMKEY_RES_KEY) {
+			// FIXME does this work???
+			vis_event_emit(vis, VIS_EVENT_MOUSE, &event, &button, &line, &col);
+		}
+
 		return getkey(vis);
 	}
 	termkey_strfkey(termkey, vis->key, sizeof(vis->key), &key, TERMKEY_FORMAT_VIM);

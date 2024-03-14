@@ -3610,6 +3610,23 @@ void vis_lua_term_csi(Vis *vis, const long *csi) {
 	}
 	lua_pop(L, 1);
 }
+
+/* FIXME: UNTESTED */
+void vis_lua_mouse(Vis *vis, const int *ev, const int *button, const int *line, const int *col) {
+	lua_State *L = vis->lua;
+	if (!L)
+		return;
+	vis_lua_event_get(L, "mouse");
+	if (lua_isfunction(L, -1)) {
+		lua_pushinteger(L, *col);
+		lua_pushinteger(L, *line);
+		lua_pushinteger(L, *button);
+		lua_pushinteger(L, *ev);
+		pcall(vis, L, 4, 0);
+	}
+	lua_pop(L, 1);
+}
+
 /***
  * The response received from the process started via @{Vis:communicate}.
  * @function process_response
