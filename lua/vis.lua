@@ -152,7 +152,7 @@ local events = {
 	WIN_OPEN = "Event::WIN_OPEN", -- see @{win_open}
 	WIN_STATUS = "Event::WIN_STATUS", -- see @{win_status}
 	TERM_CSI = "Event::TERM_CSI", -- see @{term_csi}
-	MOUSE = "Event::MOUSE", -- FIXME still hacking
+	MOUSE = "Event::MOUSE", -- FIXME still hacking, need to add ways of TermKey constants
 	PROCESS_RESPONSE = "Event::PROCESS_RESPONSE", -- see @{process_response}
 }
 

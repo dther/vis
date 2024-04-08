@@ -58,7 +58,7 @@ typedef struct {
 	void (*win_highlight)(Vis*, Win*);
 	void (*win_status)(Vis*, Win*);
 	void (*term_csi)(Vis*, const long *);
-	void (*mouse)(Vis*, const int *, const int *, const int *, const int *); // FIXME unimplemented
+	void (*mouse)(Vis*, const UiMouseEvent *);
 } VisEvent;
 
 /** Union used to pass arguments to key action functions. */

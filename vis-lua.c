@@ -3611,17 +3611,24 @@ void vis_lua_term_csi(Vis *vis, const long *csi) {
 	lua_pop(L, 1);
 }
 
-/* FIXME: UNTESTED */
-void vis_lua_mouse(Vis *vis, const int *ev, const int *button, const int *line, const int *col) {
+/***
+ * Mouse event received from terminal. FIXME
+ * @function mouse
+ * @tparam int type the type of mouse event (e.g., press, release, drag)
+ * @tparam int button
+ * @tparam int line visual terminal line
+ * @tparam int col visual terminal column
+ */
+void vis_lua_mouse(Vis *vis, const UiMouseEvent *event) {
 	lua_State *L = vis->lua;
 	if (!L)
 		return;
 	vis_lua_event_get(L, "mouse");
 	if (lua_isfunction(L, -1)) {
-		lua_pushinteger(L, *col);
-		lua_pushinteger(L, *line);
-		lua_pushinteger(L, *button);
-		lua_pushinteger(L, *ev);
+		lua_pushinteger(L, event->type);
+		lua_pushinteger(L, event->button);
+		lua_pushinteger(L, event->line);
+		lua_pushinteger(L, event->col);
 		pcall(vis, L, 4, 0);
 	}
 	lua_pop(L, 1);
