@@ -3611,8 +3611,9 @@ void vis_lua_term_csi(Vis *vis, const long *csi) {
 	lua_pop(L, 1);
 }
 
+/* See README.mouse.md */
 /***
- * Mouse event received from terminal. FIXME
+ * Mouse event received from terminal.
  * @function mouse
  * @tparam int type the type of mouse event (e.g., press, release, drag)
  * @tparam int button

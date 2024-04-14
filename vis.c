@@ -106,7 +106,7 @@ bool vis_event_emit(Vis *vis, enum VisEvents id, ...) {
 			vis->event->term_csi(vis, va_arg(ap, const long *));
 		break;
 	case VIS_EVENT_MOUSE:
-		// TODO implement mouse events
+		/* See README.mouse.md */
 		if (vis->event->mouse)
 			vis->event->mouse(vis, va_arg(ap, const UiMouseEvent *));
 		break;
@@ -1351,6 +1351,7 @@ static const char *getkey(Vis *vis) {
 		return getkey(vis);
 	}
 
+	/* See README.mouse.md */
 	if (key.type == TERMKEY_TYPE_MOUSE) {
 		UiMouseEvent event;
 		if (termkey_interpret_mouse(termkey, &key, &event.type, &event.button, &event.line, &event.col) == TERMKEY_RES_KEY) {

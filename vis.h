@@ -58,6 +58,7 @@ typedef struct {
 	void (*win_highlight)(Vis*, Win*);
 	void (*win_status)(Vis*, Win*);
 	void (*term_csi)(Vis*, const long *);
+	/* See README.mouse.md */
 	void (*mouse)(Vis*, const UiMouseEvent *);
 } VisEvent;
 
