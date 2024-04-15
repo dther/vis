@@ -114,6 +114,12 @@ vis.events.subscribe(vis.events.WIN_STATUS, function(win)
 	table.insert(left_parts, (file.name or '[No Name]') ..
 		(file.modified and ' [+]' or '') .. (vis.recording and ' @' or ''))
 
+	-- See vis-mouse.lua and README.mouse.md
+	if mouse and getmousestr then
+		local mousestr = getmousestr()
+		table.insert(left_parts, mousestr)
+	end
+
 	local count = vis.count
 	local keys = vis.input_queue
 	if keys ~= '' then

@@ -14,8 +14,12 @@ Please consider adding your own emulator to this list if this patch is useful to
 
 **The mouse API is currently undocumented and subject to change. Read `vis-mouse.lua` for any information regarding mouse binding.**
 
-To activate mouse support, add `require("vis-mouse.lua")` to your `visrc.lua`.
+To activate mouse support, add `require("vis-mouse")` to your `visrc.lua`.
 This will automatically add the necessary hooks to signal the terminal to detect mouse input.
+
+An example of extending vis-mouse is also included in `lua/visrc.lua`, `getmousestr`,
+which converts the mouse state exposed by vis-mouse into a string that can be displayed
+in the status bar.
 
 `vis-mouse` works by
 **estimating which character in the file is closest to the mouse cursor's actual position.**
