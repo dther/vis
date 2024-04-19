@@ -103,6 +103,7 @@ struct UiWin {
 	bool (*style_define)(UiWin*, int id, const char *style);
 	int (*window_width)(UiWin*);
 	int (*window_height)(UiWin*);
+	bool (*style_set_pos)(UiWin*, int x, int y, enum UiStyle);
 };
 
 enum UiLayout ui_layout_get(Ui *ui);
