@@ -105,6 +105,11 @@ bool vis_event_emit(Vis *vis, enum VisEvents id, ...) {
 		if (vis->event->term_csi)
 			vis->event->term_csi(vis, va_arg(ap, const long *));
 		break;
+	case VIS_EVENT_MOUSE:
+		/* See README.mouse.md */
+		if (vis->event->mouse)
+			vis->event->mouse(vis, va_arg(ap, const UiMouseEvent *));
+		break;
 	}
 
 	va_end(ap);
@@ -1313,6 +1318,16 @@ static const char *getkey(Vis *vis) {
 			args[1] = nargs;
 			vis_event_emit(vis, VIS_EVENT_TERM_CSI, args);
 		}
+		return getkey(vis);
+	}
+
+	/* See README.mouse.md */
+	if (key.type == TERMKEY_TYPE_MOUSE) {
+		UiMouseEvent event;
+		if (termkey_interpret_mouse(termkey, &key, &event.type, &event.button, &event.line, &event.col) == TERMKEY_RES_KEY) {
+			vis_event_emit(vis, VIS_EVENT_MOUSE, &event);
+		}
+
 		return getkey(vis);
 	}
 	termkey_strfkey(termkey, vis->key, sizeof(vis->key), &key, TERMKEY_FORMAT_VIM);

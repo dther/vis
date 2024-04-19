@@ -67,6 +67,15 @@ typedef struct {
 	CellColor fg, bg;
 } CellStyle;
 
+/* See README.mouse.md */
+typedef struct {
+	/* contains all known information about a TermKey mouse event. */
+	TermKeyMouseEvent type; /* whether this is a press, release, drag, etc. */
+	int button;
+	int line;
+	int col;
+} UiMouseEvent;
+
 #include "vis.h"
 #include "text.h"
 #include "view.h"

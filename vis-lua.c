@@ -3610,6 +3610,31 @@ void vis_lua_term_csi(Vis *vis, const long *csi) {
 	}
 	lua_pop(L, 1);
 }
+
+/* See README.mouse.md */
+/***
+ * Mouse event received from terminal.
+ * @function mouse
+ * @tparam int type the type of mouse event (e.g., press, release, drag)
+ * @tparam int button
+ * @tparam int line visual terminal line
+ * @tparam int col visual terminal column
+ */
+void vis_lua_mouse(Vis *vis, const UiMouseEvent *event) {
+	lua_State *L = vis->lua;
+	if (!L)
+		return;
+	vis_lua_event_get(L, "mouse");
+	if (lua_isfunction(L, -1)) {
+		lua_pushinteger(L, event->type);
+		lua_pushinteger(L, event->button);
+		lua_pushinteger(L, event->line);
+		lua_pushinteger(L, event->col);
+		pcall(vis, L, 4, 0);
+	}
+	lua_pop(L, 1);
+}
+
 /***
  * The response received from the process started via @{Vis:communicate}.
  * @function process_response
