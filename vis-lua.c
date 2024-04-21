@@ -166,7 +166,7 @@ void vis_lua_win_status(Vis *vis, Win *win) { window_status_update(vis, win); }
 void vis_lua_term_csi(Vis *vis, const long *csi) { }
 void vis_lua_process_response(Vis *vis, const char *name,
                               char *buffer, size_t len, ResponseType rtype) { }
-
+void vis_lua_ui_draw(Vis *vis) { }
 
 #else
 
