@@ -1,7 +1,7 @@
 # Dther's Vis Fork
 
 > If you're here by accident,
-> You probably want martanne/vis.
+> You probably want [martanne/vis][martanne/vis].
 > **USE THIS AT YOUR OWN RISK.**
 
 This branch of the repository contains my own personal hack of the vis editor.
@@ -12,3 +12,5 @@ I keep it here for ease of personal access and for the curious.
 
 This fork is **NOT FOR PUBLIC USE**.
 Expect messy hacks and undefined behaviour!
+
+[martanne/vis]: https://github.com/martanne/vis
