@@ -109,6 +109,9 @@ bool vis_event_emit(Vis *vis, enum VisEvents id, ...) {
 		/* See README.mouse.md */
 		if (vis->event->mouse)
 			vis->event->mouse(vis, va_arg(ap, const UiMouseEvent *));
+	case VIS_EVENT_UI_DRAW:
+		if (vis->event->ui_draw)
+			vis->event->ui_draw(vis);
 		break;
 	}
 

@@ -69,6 +69,9 @@ struct UiTermWin {
 #include "ui-terminal-vt100.c"
 #endif
 
+/* helper macro for handling UiTerm.cells */
+#define CELL_AT_POS(UI, X, Y) (((UI)->cells) + (X) + ((Y) * (UI)->width));
+
 __attribute__((noreturn)) static void ui_die(Ui *ui, const char *msg, va_list ap) {
 	UiTerm *tui = (UiTerm*)ui;
 	ui_term_backend_free(tui);
@@ -167,6 +170,8 @@ static bool ui_style_define(UiWin *w, int id, const char *style) {
 			for (*value++ = '\0'; *value == ' '; value++);
 		if (!strcasecmp(option, "reverse")) {
 			cell_style.attr |= CELL_ATTR_REVERSE;
+		} else if (!strcasecmp(option, "notreverse")) {
+			cell_style.attr &= CELL_ATTR_REVERSE;
 		} else if (!strcasecmp(option, "bold")) {
 			cell_style.attr |= CELL_ATTR_BOLD;
 		} else if (!strcasecmp(option, "notbold")) {
@@ -303,6 +308,17 @@ static void ui_window_style_set(UiWin *w, Cell *cell, enum UiStyle id) {
 	memcpy(&cell->style, &set, sizeof(CellStyle));
 }
 
+static bool ui_window_style_set_pos(UiWin *w, int x, int y, enum UiStyle id) {
+	UiTermWin *win = (UiTermWin*)w;
+	UiTerm *tui = win->ui;
+	if (x < 0 || y < 0 || y >= win->height || x >= win->width) {
+		return false;
+	}
+	Cell *cell = CELL_AT_POS(tui, win->x + x, win->y + y)
+	ui_window_style_set(w, cell, id);
+	return true;
+}
+
 static void ui_window_status(UiWin *w, const char *status) {
 	UiTermWin *win = (UiTermWin*)w;
 	if (!(win->options & UI_OPTION_STATUSBAR))
@@ -376,6 +392,7 @@ static void ui_draw(Ui *ui) {
 		ui_window_draw((UiWin*)win);
 	if (tui->info[0])
 		ui_draw_string(tui, 0, tui->height-1, tui->info, NULL, UI_STYLE_INFO);
+	vis_event_emit(tui->vis, VIS_EVENT_UI_DRAW);
 	ui_term_backend_blit(tui);
 }
 
@@ -532,6 +549,7 @@ static UiWin *ui_window_new(Ui *ui, Win *w, enum UiOption options) {
 
 	win->uiwin = (UiWin) {
 		.style_set = ui_window_style_set,
+		.style_set_pos = ui_window_style_set_pos,
 		.status = ui_window_status,
 		.options_set = ui_window_options_set,
 		.options_get = ui_window_options_get,

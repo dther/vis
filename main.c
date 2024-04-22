@@ -2230,6 +2230,7 @@ int main(int argc, char *argv[]) {
 		.win_status = vis_lua_win_status,
 		.term_csi = vis_lua_term_csi,
 		.mouse = vis_lua_mouse, /* See README.mouse.md */
+		.ui_draw = vis_lua_ui_draw,
 	};
 
 	vis = vis_new(ui_term_new(), &event);

@@ -168,6 +168,7 @@ local events = {
 	TERM_CSI = "Event::TERM_CSI", -- see @{term_csi}
 	MOUSE = "Event::MOUSE", -- FIXME still hacking, need to add ways of TermKey constants
 	PROCESS_RESPONSE = "Event::PROCESS_RESPONSE", -- see @{process_response}
+	UI_DRAW = "Event::UI_DRAW", -- see @{ui_draw}
 }
 
 events.file_close = function(...) events.emit(events.FILE_CLOSE, ...) end
@@ -185,6 +186,7 @@ events.win_status = function(...) events.emit(events.WIN_STATUS, ...) end
 events.term_csi = function(...) events.emit(events.TERM_CSI, ...) end
 events.mouse = function(...) events.emit(events.MOUSE, ...) end
 events.process_response = function(...) events.emit(events.PROCESS_RESPONSE, ...) end
+events.ui_draw = function(...) events.emit(events.UI_DRAW, ...) end
 
 local handlers = {}
 
