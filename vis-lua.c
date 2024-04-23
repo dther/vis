@@ -531,6 +531,24 @@ static void pushrange(lua_State *L, Filerange *r) {
 	lua_settable(L, -3);
 }
 
+static void pushlinemap(lua_State *L, Win *win) {
+	if (!win || !win->view) {
+		lua_pushnil(L);
+		return;
+	}
+	View *view = win->view;
+	Line *line = view_lines_first(view);
+	size_t lines = view_height_get(view);
+	lua_createtable(L, lines, 0);
+	for (lua_Integer l = 1; l <= lines; l++) {
+		if (!line)
+			break;
+		lua_pushunsigned(L, line->lineno);
+		lua_seti(L, -2, l);
+		line = line->next;
+	}
+}
+
 static Filerange getrange(lua_State *L, int index) {
 	Filerange range = text_range_empty();
 	if (lua_istable(L, index)) {
@@ -1834,6 +1852,10 @@ static const struct luaL_Reg registers_funcs[] = {
  * @tfield Range viewport
  */
 /***
+ * A list mapping lines in the viewport to logical lines in the file.
+ * @tfield list linemap
+ */
+/***
  * The window width.
  * @tfield int width
  */
@@ -1869,6 +1891,11 @@ static int window_index(lua_State *L) {
 		if (strcmp(key, "viewport") == 0) {
 			Filerange r = view_viewport_get(win->view);
 			pushrange(L, &r);
+			return 1;
+		}
+
+		if (strcmp(key, "linemap") == 0) {
+			pushlinemap(L, win);
 			return 1;
 		}
 
