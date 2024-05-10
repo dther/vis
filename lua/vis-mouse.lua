@@ -265,7 +265,7 @@ end
 -- calculate the approximate closest file position to the cursor
 function guess_mouse_pos(mouse)
 	local win = vis.win
-	local visible = win.file:content(win.viewport)
+	local visible = win.file:content(win.viewport.bytes)
 
 	-- take note of options that affect cursor coordinates
 	local tw = win.options.tabwidth
@@ -320,9 +320,9 @@ function guess_mouse_pos(mouse)
 	end
 	coloffset = coloffset - 1
 
-	local guess = win.viewport.start + linestart + coloffset
-	if (guess < win.viewport.start) then guess = win.viewport.start end
-	if (guess > win.viewport.finish) then guess = win.viewport.finish end
+	local guess = win.viewport.bytes.start + linestart + coloffset
+	if (guess < win.viewport.bytes.start) then guess = win.viewport.bytes.start end
+	if (guess > win.viewport.bytes.finish) then guess = win.viewport.bytes.finish end
 
 	return guess
 end

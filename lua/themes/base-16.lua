@@ -44,7 +44,6 @@ lexers.STYLE_ADDITION = 'fore:green'
 lexers.STYLE_DELETION = 'fore:red'
 lexers.STYLE_CHANGE = 'fore:yellow'
 
---[[
 -- CSS
 lexers.STYLE_PROPERTY = lexers.STYLE_ATTRIBUTE
 lexers.STYLE_PSEUDOCLASS = ''
@@ -71,6 +70,7 @@ lexers.STYLE_ITALIC = 'italics'
 lexers.STYLE_LIST = lexers.STYLE_KEYWORD
 lexers.STYLE_LINK = lexers.STYLE_KEYWORD
 lexers.STYLE_REFERENCE = lexers.STYLE_KEYWORD
+lexers.STYLE_CODE = lexers.STYLE_EMBEDDED
 
 -- Output
 lexers.STYE_FILENAME = ''
@@ -136,7 +136,7 @@ lexers.STYLE_LITERAL_BLOCK = lexers.STYLE_EMBEDDED
 lexers.STYLE_FOOTNOTE_BLOCK = lexers.STYLE_LABEL
 lexers.STYLE_CITATION_BLOCK = lexers.STYLE_LABEL
 lexers.STYLE_LINK_BLOCK = lexers.STYLE_LABEL
-lexers.STYLE_CODE_BLOCK = lexers.STYLE_EMBEDDED
+lexers.STYLE_CODE_BLOCK = lexers.STYLE_CODE
 lexers.STYLE_DIRECTIVE = lexers.STYLE_KEYWORD
 lexers.STYLE_SPHINX_DIRECTIVE = lexers.STYLE_KEYWORD
 lexers.STYLE_UNKNOWN_DIRECTIVE = lexers.STYLE_KEYWORD
@@ -154,4 +154,3 @@ lexers.STYLE_TAGGED = lexers.STYLE_EMBEDDED
 lexers.STYLE_TAGGED_AREA = lexers.STYLE_EMBEDDED
 lexers.STYLE_TABLE_SEP = 'fore:green'
 lexers.STYLE_HEADER_CELL_CONTENT = 'fore:green'
---]]
